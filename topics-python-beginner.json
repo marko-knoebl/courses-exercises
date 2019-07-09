@@ -1,0 +1,20 @@
+[
+  "python-interactive-console",
+  "python-variables",
+  "python-int",
+  "python-float",
+  "python-string",
+  "python-f-strings",
+  "python-string-concatenation",
+  "python-string-escape-sequences",
+  "python-bool",
+  "python-none",
+  "python-type-conversions",
+  "python-dict-creation",
+  "python-dict-accessing-elements",
+  "python-list-creation",
+  "python-list-accessing-elements",
+  "python-list-append",
+  "python-list-pop-basic",
+  "python-list-length"
+]
