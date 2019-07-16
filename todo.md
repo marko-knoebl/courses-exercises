@@ -1,0 +1,3 @@
+- while loop that counts from 1 to 10
+- while loop that prints the sequence 7, 14, 21, ...
+- babylonian method (for finding the square root)
