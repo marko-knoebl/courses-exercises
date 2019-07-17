@@ -1,3 +1,12 @@
 - while loop that counts from 1 to 10
 - while loop that prints the sequence 7, 14, 21, ...
-- babylonian method (for finding the square root)
+- lottery generator
+- hangman
+- tic-tac-toe with graphical (text) interface
+- ask_yes_no
+- isbn
+- iban
+- fibonacci numbers
+- prime numbers in an interval
+
+- luhn (enumerate)
