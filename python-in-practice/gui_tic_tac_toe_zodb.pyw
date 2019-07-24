@@ -1,4 +1,6 @@
 import tkinter
+import transaction
+from ZODB import DB, FileStorage
 
 
 class Game:
@@ -40,6 +42,8 @@ class Game:
             self.game_over = True
             for listener in self._event_listeners["game_over"]:
                 listener()
+        if hasattr(self, "save"):
+            self.save()
 
     def winner(self):
         for comb in self.winning_combinations:
@@ -52,10 +56,34 @@ class Game:
         self._event_listeners[event_name].append(callback)
 
 
+class PersistentGame(Game):
+    def __init__(self, filename="game.fs"):
+        super().__init__()
+        # set up zodb storage
+        db = DB(FileStorage.FileStorage(filename))
+        self.connection = db.open()
+        self.root = self.connection.root()
+
+    def save(self, filename="game.fs"):
+        self.root["field"] = self.field
+        self.root["round"] = self.round
+        self.root["game_over"] = self.game_over
+        transaction.commit()
+
+    def load(self, filename="game.fs"):
+        self.field = self.root["field"]
+        self.round = self.root["round"]
+        self.game_over = self.root["game_over"]
+
+
 class GameUI:
     def __init__(self):
 
         self.game = Game()
+        try:
+            self.game.load()
+        except:
+            pass
 
         self.window = tkinter.Tk()
         self.buttons = []
@@ -72,6 +100,7 @@ class GameUI:
                 btn.pack(side=tkinter.LEFT)
                 button_row.append(btn)
             self.buttons.append(button_row)
+        self.update_button_labels()
         self.new_btn = tkinter.Button(
             master=self.window, text="New Game", command=self.new_game
         )
@@ -79,9 +108,15 @@ class GameUI:
         self.game.add_event_listener("place_mark", self.on_mark_placed)
         self.game.add_event_listener("game_over", self.on_game_over)
 
+    def update_button_labels(self):
+        for i, button_row in enumerate(self.buttons):
+            for j, button in enumerate(button_row):
+                button.config(text=self.game.field[i][j] or "  ")
+
     def make_click_handler(self, row, col):
         def click_handler():
             self.game.place_mark(row, col)
+
         return click_handler
 
     def on_mark_placed(self, row, col):
