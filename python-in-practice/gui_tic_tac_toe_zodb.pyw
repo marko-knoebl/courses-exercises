@@ -48,7 +48,7 @@ class Game:
     def winner(self):
         for comb in self.winning_combinations:
             symbols = [self.field[comb[i] // 3][comb[i] % 3] for i in range(3)]
-            if symbols[0] == symbols[1] == symbols[2]:
+            if symbols[0] == symbols[1] == symbols[2] != None:
                 return symbols[0]
         return None
 
@@ -79,39 +79,43 @@ class PersistentGame(Game):
 class GameUI:
     def __init__(self):
 
-        self.game = Game()
+        self.game = PersistentGame()
         try:
             self.game.load()
         except:
             pass
 
         self.window = tkinter.Tk()
+
+        self.field = tkinter.Frame(master=self.window)
+        self.field.grid(column=0, row=0)
+
         self.buttons = []
         for i, row in enumerate(self.game.field):
             button_row = []
-            button_frame = tkinter.Frame(master=self.window)
-            button_frame.pack()
             for j, cell in enumerate(row):
                 btn = tkinter.Button(
-                    master=button_frame,
-                    text="  ",
+                    master=self.field,
+                    text="",
                     command=self.make_click_handler(i, j),
+                    width=2,
+                    height=2
                 )
-                btn.pack(side=tkinter.LEFT)
+                btn.grid(column=i, row=j)
                 button_row.append(btn)
             self.buttons.append(button_row)
         self.update_button_labels()
         self.new_btn = tkinter.Button(
             master=self.window, text="New Game", command=self.new_game
         )
-        self.new_btn.pack()
+        self.new_btn.grid(column=0, row=1)
         self.game.add_event_listener("place_mark", self.on_mark_placed)
         self.game.add_event_listener("game_over", self.on_game_over)
 
     def update_button_labels(self):
         for i, button_row in enumerate(self.buttons):
             for j, button in enumerate(button_row):
-                button.config(text=self.game.field[i][j] or "  ")
+                button.config(text=self.game.field[i][j] or "")
 
     def make_click_handler(self, row, col):
         def click_handler():

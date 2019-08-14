@@ -10,3 +10,5 @@
 - prime numbers in an interval
 
 - luhn (enumerate)
+
+- text analysis: occurences of words (3x print, 9x if, ...): open, re, DefaultDict

@@ -1,4 +1,4 @@
-# Iris Regression (simple)
+# Iris regression (simple)
 
 The iris dataset contains measurements of leafs of three species of iris flowers along with their species.
 
