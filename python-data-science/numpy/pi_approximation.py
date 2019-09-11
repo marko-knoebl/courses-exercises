@@ -11,7 +11,7 @@ points = np.random.random((n, 2)) * 2 - np.array([1, 1])
 r = np.sqrt(points[:, 0] ** 2 + points[:, 1] ** 2)
 
 # array of points within the unit circle
-points_inner = points[r <= 1, :]
+points_inner = points[r <= 1]
 
 # number of points that are closer than 1
 print(points_inner.shape)

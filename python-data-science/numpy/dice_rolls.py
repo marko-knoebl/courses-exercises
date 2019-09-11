@@ -1,6 +1,6 @@
 import numpy as np
 
-dice = np.random.randint(1, 10, (10000, 10))
+dice = np.random.randint(1, 6, (10000, 10))
 
 total = dice.sum(axis=1)
 

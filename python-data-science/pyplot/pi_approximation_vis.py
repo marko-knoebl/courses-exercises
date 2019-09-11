@@ -12,9 +12,9 @@ points = np.random.random((n, 2)) * 2 - np.array([1, 1])
 r = np.sqrt(points[:, 0] ** 2 + points[:, 1] ** 2)
 
 # array of points within the unit circle
-points_inner = points[r <= 1, :]
+points_inner = points[r <= 1]
 # array of points outside the unit circle
-points_outer = points[r > 1, :]
+points_outer = points[r > 1]
 
 pi_approx = points_inner.shape[0] * 4 / n
 
