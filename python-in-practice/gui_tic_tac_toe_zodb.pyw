@@ -1,4 +1,4 @@
-import tkinter
+import tkinter as tk
 import transaction
 from ZODB import DB, FileStorage
 
@@ -85,27 +85,27 @@ class GameUI:
         except:
             pass
 
-        self.window = tkinter.Tk()
+        self.window = tk.Tk()
 
-        self.field = tkinter.Frame(master=self.window)
+        self.field = tk.Frame(master=self.window)
         self.field.grid(column=0, row=0)
 
         self.buttons = []
         for i, row in enumerate(self.game.field):
             button_row = []
             for j, cell in enumerate(row):
-                btn = tkinter.Button(
+                btn = tk.Button(
                     master=self.field,
                     text="",
                     command=self.make_click_handler(i, j),
                     width=2,
-                    height=2
+                    height=2,
                 )
                 btn.grid(column=i, row=j)
                 button_row.append(btn)
             self.buttons.append(button_row)
         self.update_button_labels()
-        self.new_btn = tkinter.Button(
+        self.new_btn = tk.Button(
             master=self.window, text="New Game", command=self.new_game
         )
         self.new_btn.grid(column=0, row=1)
@@ -130,13 +130,13 @@ class GameUI:
     def on_game_over(self):
         for button_row in self.buttons:
             for button in button_row:
-                button.config(state=tkinter.DISABLED)
+                button.config(state=tk.DISABLED)
 
     def new_game(self):
         self.game.new_game()
         for button_row in self.buttons:
             for button in button_row:
-                button.config(text="  ", state=tkinter.NORMAL)
+                button.config(text="  ", state=tk.NORMAL)
 
     def run(self):
         self.window.mainloop()

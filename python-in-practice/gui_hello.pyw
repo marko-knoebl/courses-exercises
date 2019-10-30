@@ -1,8 +1,8 @@
-import tkinter
+import tkinter as tk
 
-window = tkinter.Tk()
+window = tk.Tk()
 
-hello_label = tkinter.Label(master=window, text="Hello!")
+hello_label = tk.Label(master=window, text="Hello!")
 hello_label.grid(column=0, row=0)
 
 window.mainloop()
