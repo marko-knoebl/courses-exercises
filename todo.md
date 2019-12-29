@@ -12,3 +12,4 @@
 - luhn (enumerate)
 
 - text analysis: occurences of words (3x print, 9x if, ...): open, re, DefaultDict
+- port tic-tac-toe implementation from python-advanced to python-in-practice
