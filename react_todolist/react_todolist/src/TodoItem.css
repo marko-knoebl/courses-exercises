@@ -1,0 +1,8 @@
+.TodoItem {
+  margin: 4px;
+}
+
+.TodoItem.completed {
+  text-decoration: line-through;
+  color: lightgrey;
+}
