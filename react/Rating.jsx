@@ -1,18 +1,23 @@
 import React from "react";
 
-const Rating = ({ stars, onChange }) => {
+const styles = {
+  active: { color: "gold" },
+  inactive: { color: "lightgrey" }
+};
+
+const Rating = props => {
   const starIds = [1, 2, 3, 4, 5];
   const starData = starIds.map(id => ({
     id: id,
-    active: id <= stars
+    active: id <= props.stars
   }));
   return (
     <div>
       {starData.map(star => (
         <span
-          style={{ color: star.active ? "gold" : "lightgrey" }}
+          style={star.active ? styles.active : styles.inactive}
           onClick={() => {
-            onChange && onChange(star.id);
+            props.onChange && props.onChange(star.id);
           }}
         >
           {star.active ? "★" : "☆"}
