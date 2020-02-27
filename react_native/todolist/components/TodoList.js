@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey"
   },
   completedText: {
-    textDecoration: "line-through"
+    textDecorationLine: "line-through"
   }
 });
 
