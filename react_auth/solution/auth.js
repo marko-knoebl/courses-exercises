@@ -15,6 +15,7 @@ const AuthProvider = props => {
     const content = await res.json();
     if (content.status === "success") {
       setUsername(loginUsername);
+      setToken(content.token);
       setError(null);
     } else {
       setUsername(null);
