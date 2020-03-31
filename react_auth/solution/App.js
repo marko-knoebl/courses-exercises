@@ -29,8 +29,8 @@ const LoginForm = () => {
 };
 
 const UserDetails = () => {
-  const { username } = useAuth();
-  return <div>logged in as {username}</div>;
+  const auth = useAuth();
+  return <div>logged in as {auth.username}</div>;
 };
 
 const Main = () => {
