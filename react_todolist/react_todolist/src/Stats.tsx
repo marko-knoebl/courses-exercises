@@ -5,8 +5,8 @@ type Props = {
   todos: Array<Todo>;
 };
 
-const Stats: React.FC<Props> = props => {
-  const numIncomplete = props.todos.filter(todo => !todo.completed).length;
+const Stats = (props: Props) => {
+  const numIncomplete = props.todos.filter((todo) => !todo.completed).length;
   return (
     <div>
       {numIncomplete} open todos ({props.todos.length - numIncomplete}{" "}

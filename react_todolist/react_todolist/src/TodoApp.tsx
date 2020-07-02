@@ -7,14 +7,21 @@ import TodoList from "./TodoList";
 import LoadFromApi from "./LoadFromApi";
 import Stats from "./Stats";
 
-const TodoApp: React.FC = () => {
-  const { todos, addTodo, toggleTodo, loadFromApi, isLoading } = useTodos();
+const TodoApp = () => {
+  const {
+    todos,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    loadFromApi,
+    isLoading,
+  } = useTodos();
   return (
     <div className="TodoApp">
       <h1>Todo</h1>
       <Stats todos={todos} />
       <LoadFromApi isLoading={isLoading} onLoad={loadFromApi} />
-      <TodoList todos={todos} onToggle={toggleTodo} />
+      <TodoList todos={todos} onToggle={toggleTodo} onDelete={deleteTodo} />
       <AddTodo onAddTodo={addTodo} />
     </div>
   );

@@ -5,7 +5,7 @@ type Props = {
   onLoad: () => void;
 };
 
-const LoadFromApi: React.FC<Props> = (props: Props) => (
+const LoadFromApi = (props: Props) => (
   <div>
     <button disabled={props.isLoading} onClick={props.onLoad}>
       load from API

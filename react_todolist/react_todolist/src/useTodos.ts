@@ -16,19 +16,16 @@ type TodoAction =
 const todosReducer = (todos: Array<Todo>, action: TodoAction) => {
   switch (action.type) {
     case "addTodo":
-      let newId = 1;
-      for (let todo of todos) {
-        newId = Math.max(todo.id + 1, newId);
-      }
+      const newId = Math.max(0, ...todos.map((t) => t.id)) + 1;
       return [...todos, { id: newId, title: action.payload, completed: false }];
     case "toggleTodo":
-      return todos.map(todo =>
+      return todos.map((todo) =>
         todo.id === action.payload
           ? { ...todo, completed: !todo.completed }
           : todo
       );
     case "deleteTodo":
-      return todos.filter(todo => todo.id !== action.payload);
+      return todos.filter((todo) => todo.id !== action.payload);
     case "setTodos":
       return action.payload;
     default:
@@ -49,12 +46,12 @@ const useTodos = () => {
   useEffect(() => {
     if (isLoading) {
       fetch("https://jsonplaceholder.typicode.com/todos")
-        .then(res => res.json())
+        .then((res) => res.json())
         .then((apiTodos: Array<ApiTodo>) => {
-          const todos = apiTodos.map(apiTodo => ({
+          const todos = apiTodos.map((apiTodo) => ({
             id: apiTodo.id,
             title: apiTodo.title,
-            completed: apiTodo.completed
+            completed: apiTodo.completed,
           }));
           todosDispatch({ type: "setTodos", payload: todos });
           setIsLoading(false);
@@ -71,7 +68,7 @@ const useTodos = () => {
     deleteTodo: (id: number) =>
       todosDispatch({ type: "deleteTodo", payload: id }),
     toggleTodo: (id: number) =>
-      todosDispatch({ type: "toggleTodo", payload: id })
+      todosDispatch({ type: "toggleTodo", payload: id }),
   };
 };
 

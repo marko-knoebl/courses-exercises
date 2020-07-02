@@ -1,8 +1,13 @@
-.TodoItem {
+.todo-item {
   margin: 4px;
+  background-color: lightcoral;
 }
 
-.TodoItem.completed {
+.todo-item.completed {
+  background-color: lightgrey;
+}
+
+.todo-item-text-completed {
   text-decoration: line-through;
-  color: lightgrey;
+  color: grey;
 }
