@@ -1,42 +1,37 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import TodoApp from "./TodoApp";
 
 it("renders a todo app", () => {
-  const instance = render(<TodoApp />);
+  render(<TodoApp />);
 });
 
 describe("interactions", () => {
   const createTodoAppWithOneTodo = () => {
-    const instance = render(<TodoApp />);
-    const newTitleInput = instance.getByLabelText(
-      /new title:/i
-    ) as HTMLInputElement;
+    render(<TodoApp />);
+    const newTitleInput = screen.getByRole("textbox", { name: /new title/i });
     fireEvent.change(newTitleInput, { target: { value: "first todo" } });
-    fireEvent.click(instance.getByText("add"));
-    return instance;
+    fireEvent.click(screen.getByRole("button", { name: "add" }));
   };
 
   it("creates a todo app with one todo", () => {
-    const instance = createTodoAppWithOneTodo();
-    const todoElements = instance.getAllByText(/TODO/);
+    createTodoAppWithOneTodo();
+    const todoElements = screen.getAllByRole("listitem");
     expect(todoElements).toHaveLength(1);
   });
 
   it("lets a user toggle a todo", () => {
-    // arrange
-    const instance = createTodoAppWithOneTodo();
-    // act
-    fireEvent.click(instance.getByText(/TODO/));
-    // assert
-    expect(instance.getByText(/DONE/)).toBeInTheDocument();
+    createTodoAppWithOneTodo();
+    const todoItem = screen.getByRole("listitem");
+    expect(todoItem).toHaveTextContent(/TODO/);
+    fireEvent.click(todoItem);
+    expect(todoItem).toHaveTextContent(/DONE/);
   });
 
   it("lets a user delete a todo", () => {
-    const instance = createTodoAppWithOneTodo();
-    fireEvent.click(instance.getByText("X"));
-    expect(instance.queryAllByText(/DONE/)).toHaveLength(0);
-    expect(instance.queryAllByText(/TODO/)).toHaveLength(0);
+    createTodoAppWithOneTodo();
+    fireEvent.click(screen.getByRole("button", { name: "X" }));
+    expect(screen.queryAllByRole("listitem")).toHaveLength(0);
   });
 });
 
@@ -51,13 +46,13 @@ it("fetches todos from an API", async () => {
           { id: 2, title: "two", completed: true },
         ]),
     }) as Promise<Response>;
-  const instance = render(<TodoApp />);
+  render(<TodoApp />);
 
   // act
-  fireEvent.click(instance.getByText(/load from API/));
+  fireEvent.click(screen.getByRole("button", { name: /load from API/ }));
 
   // assert
-  const allTodos = await instance.findAllByText(/(TODO)|(DONE)/);
+  const allTodos = await screen.findAllByRole("listitem");
   const numTodos = allTodos.length;
   expect(numTodos).toBeGreaterThanOrEqual(2);
 

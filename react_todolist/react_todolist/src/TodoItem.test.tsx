@@ -1,10 +1,10 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import TodoItem from "./TodoItem";
 
-it("renders a todo with a given title", () => {
+it("renders a list item with a given text", () => {
   const title = "test-title";
-  const instance = render(
+  render(
     <TodoItem
       title={title}
       completed={false}
@@ -12,13 +12,14 @@ it("renders a todo with a given title", () => {
       onDelete={() => {}}
     />
   );
-  const todoElement = instance.getByText(new RegExp(title));
+  const todoElement = screen.getByRole("listitem");
   expect(todoElement).toBeInTheDocument();
+  expect(todoElement).toHaveTextContent(new RegExp(title));
 });
 
 it("renders a completed todo", () => {
   const title = "test-title";
-  const instance = render(
+  render(
     <TodoItem
       title={title}
       completed={true}
@@ -26,6 +27,6 @@ it("renders a completed todo", () => {
       onDelete={() => {}}
     />
   );
-  const todoElement = instance.getByText(new RegExp(title));
-  expect(todoElement.className).toEqual("todo-item-text-completed");
+  const todoElement = screen.getByRole("listitem");
+  expect(todoElement.className).toEqual("todo-item completed");
 });
